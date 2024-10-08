@@ -15,24 +15,24 @@ public:
                  int sum = nums[i] + nums[left] + nums[right];
                 if(sum == 0){
                     result.push_back({nums[i],nums[left],nums[right]});
-                    ++left;
-                    --right; 
+                    left++;
+                    right--; 
 
                        // Skip duplicates for the left pointer
                 while (left < right && nums[left] == nums[left - 1]) {
-                    ++left;
+                    left++;
                 }
 
                 // Skip duplicates for the right pointer
                 while (left < right && nums[right] == nums[right + 1]) {
-                    --right;
+                    right--;
                 }
                 }
                 else if(sum < 0){
-                    ++left;
+                    left++;
                 }
                 else if(sum>0){
-                    --right;
+                    right--;
                 }
             }
         }
