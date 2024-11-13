@@ -10,34 +10,28 @@
  */
 class Solution {
 public:
-ListNode* deleteDuplicates(ListNode* head) {
-
-     if (head == NULL) {
-        return head;
-    }
-
-    // Dummy node to handle edge cases easily
-    ListNode dummy(0);
-    dummy.next = head;
-    ListNode* prev = &dummy;  // Last node before the sequence of duplicates
-
-    while (head != NULL) {
-        // Check if the current node is a start of duplicates
-        if (head->next != NULL && head->val == head->next->val) {
-            // Move head to the end of the duplicates
-            while (head->next != NULL && head->val == head->next->val) {
-                head = head->next;
-            }
-            // Skip all duplicates
-            prev->next = head->next;
-        } else {
-            // Move prev forward only when no duplicates
-            prev = prev->next;
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(head == NULL){
+            return NULL;
         }
-        // Move head forward
-        head = head->next;
+        ListNode* dummy =new ListNode(0); 
+        dummy->next = head;
+        ListNode* prev = dummy;
+        
+        ListNode* temp = head;
+        ListNode* curr = head->next;
+        while (temp != NULL && temp->next != NULL) { // Correct condition
+        if (temp->val == temp->next->val) {
+            while (temp->next != NULL && temp->val == temp->next->val) {
+                temp = temp->next; // Skip all duplicates
+            }
+            prev->next = temp->next; // Remove duplicates
+        } else {
+            prev = prev->next; // Move prev forward only if no duplicates
+        }
+        temp = temp->next; // Move temp forward
     }
-
-    return dummy.next;
-}
+    
+    return dummy->next; // Return the actual head
+    }
 };
