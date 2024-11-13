@@ -12,21 +12,30 @@
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-         vector<int> result;
-        if(root == NULL){
-            return result;
+         vector<int>ans;
+        while(root){
+            if(!root->left){
+                ans.push_back(root->val);
+                root=root->right;
+            }
+            else{
+                TreeNode* c = root->left;
+                while(c->right&&c->right!=root){
+                    c=c->right;
+                }
+                //traversed
+                if(c->right==root){
+                    ans.push_back(root->val);
+                    c->right=NULL;
+                    root=root->right;
+                }
+                // Not traversed
+                else{
+                    c->right=root;
+                    root=root->left;
+                }
+            }
         }
-       
-        vector<int> left = inorderTraversal(root->left);
-    result.insert(result.end(), left.begin(), left.end());
-
-    // Visit the current node
-    result.push_back(root->val);
-
-    // Traverse the right subtree
-    vector<int> right = inorderTraversal(root->right);
-    result.insert(result.end(), right.begin(), right.end());
-
-    return result; 
+        return ans;
     }
 };
